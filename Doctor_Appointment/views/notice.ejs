@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Notice</title>
+</head>
+
+<body>
+	<h2>notice</h2>
+	<a href="/admin">Home</a> |
+	<a href="/logout">Logout</a><br><br>
+	
+	<form method="post">
+	
+			<tr>
+				<td>
+				ID
+				</td>
+				<td><input type="text" name="id" value="<%=user.id%>" required></td>
+			</tr>
+
+            <tr>
+				<td>
+				Date
+				</td>
+				<td><input type="text" name="date" value="<%=user.date%>" required></td>
+            </tr>
+            <tr>
+				<td>
+				statement
+				</td>
+				<td><input type="text" name="statement" value="<%=user.statement%>" required></td>
+			</tr>
+		<input type="Submit" name="" value="Submit"><br>
+
+	</form>
+</body>
+
+</html>
