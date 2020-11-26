@@ -1,5 +1,6 @@
 var express = require('express');
 var login = require('./controllers/login');
+var home = require('./controllers/home');
 var logout = require('./controllers/logout');
 var signup = require('./controllers/signup');
 var Admin = require('./controllers/Admin');
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use('/public', express.static(process.cwd() + '/public'));
 
 //app.use(bodyParser());
+app.use('/', home);
 app.use('/login', login);
 app.use('/signup', signup);
 app.use('/Admin', Admin);
