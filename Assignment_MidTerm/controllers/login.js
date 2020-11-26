@@ -15,9 +15,9 @@ router.post('/', (req, res)=>{
 
 	UserModel.validate(user, function(result,status){
 		if(status){
-			//console.log(req.body.username,result);
+		
 			if(result[0].type == "Admin"){
-				//console.log(result[0].type);
+			
 				req.session.type = result[0].type;
 				res.cookie('uname', req.body.username);
 				res.redirect('/Admin');
@@ -29,7 +29,7 @@ router.post('/', (req, res)=>{
 				req.session.type = result[0].type;
 				res.cookie('uname', result[0].userid);
 				res.cookie('type', result[0].type);
-				//console.log(req.session.type)
+				
 				res.redirect('/Guser');
 			}	
 		}else{
