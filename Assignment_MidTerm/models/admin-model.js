@@ -32,6 +32,7 @@ module.exports = {
 			}
 		});
 	},
+	/*
 	assignDoctor: function (user, callback) {
 		var sql = "update doctorinfo set post=?, dept=? where username=?";
 		db.execute(sql, [user.post, user.dept, user.username], function (status) {
@@ -42,10 +43,11 @@ module.exports = {
 			}
 		});
 	},
+	*/
 	insert: function (user, callback) {
 		console.log();
-		var sql = "insert into booklist values(?,?,?,?,?,?,?,?,?,?,?)";
-		db.execute(sql, [user.id,user.fname, user.lname, user.username,user.password,user.email, user.phone, user.bloodgroup,user.dept,user.post,'unblock'], function (status) {
+		var sql = "insert into booklist values(?,?,?,?)";
+		db.execute(sql, [user.id,user.bookname, user.price, user.category], function (status) {
 			if (status) {
 				console.log(user);
 				callback(true);
@@ -77,7 +79,7 @@ module.exports = {
 	},
 
 	getAllBook: function (username, callback) {
-		var sql = "select * from booklist where username=?";
+		var sql = "select * from booklist where id=?";
 		db.getResults(sql, username, function (results) {
 			if (results.length > 0) {
 				callback(results[0]);
@@ -86,6 +88,7 @@ module.exports = {
 			}
 		});
 	},
+	
 	getMemberProfile: function (username, callback) {
 		var sql = "select * from member where username=?";
 		db.getResults(sql, username, function (results) {
@@ -97,7 +100,7 @@ module.exports = {
 		});
 	},
 	
-	getAllPendingPatient: function (callback) {
+	getAllPendingMember: function (callback) {
 		var sql = "select * from member where type=?";
 		db.getResults(sql, ['pending'], function (results) {
 			if (results.length > 0) {
@@ -119,7 +122,7 @@ module.exports = {
 			}
 		});
 	},
-	/*
+	
 	getAllAvailableSlot: function (callback) {
 		var sql = "select * from slotinfo where status=?";
 		db.getResults(sql, ['available'], function (results) {
@@ -131,8 +134,8 @@ module.exports = {
 			}
 		});
 	},
-	getAllBookedSlot: function (callback) {
-		var sql = "select * from slotinfo where status=?";
+	getAllOrderList: function (callback) {
+		var sql = "select * from order_history where status=?";
 		db.getResults(sql, ['rented'], function (results) {
 			if (results.length > 0) {
 				callback(results);
@@ -141,7 +144,7 @@ module.exports = {
 			}
 		});
 	},
-	*/
+	
 	addNotice:function(user,callback){
 		console.log();
 		var sql="insert into notice value(?,?,?)";
@@ -155,17 +158,7 @@ module.exports = {
 			}
 		});
 	},
-	/*deleteSlot: function (id, callback) {
-		var sql = "delete from slotinfo where Slotid=?";
-		db.execute(sql, [id], function (status) {
-			if (status) {
-				callback(true);
-			} else {
-				callback(false);
-			}
-		});
-	},
-	*/
+	
 	
 	MemberStatus: function (user, callback) {
 		var sql = "update member set status=? where username=?";
