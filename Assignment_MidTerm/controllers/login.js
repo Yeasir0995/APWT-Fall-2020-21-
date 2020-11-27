@@ -1,42 +1,41 @@
-var express 	= require('express');
-var UserModel	= require.main.require('./models/UserModel');
-var router 	= express.Router();
+var express = require('express');
+var router = express.Router();
+//var doctorModel = require.main.require('./models/doctor-model');
+var adminModel = require.main.require('./models/admin-model');
+router.get('/', function (req, res) {
+	res.render('login/index');
+});
 
-router.get('/', (req, res)=>{
-	res.render('login/index')
-})
-
-router.post('/', (req, res)=>{
-
-	var user = {
-		username: req.body.username,
-		password: req.body.password
-	};
-
-	UserModel.validate(user, function(result,status){
-		if(status){
-		
-			if(result[0].type == "Admin"){
-			
-				req.session.type = result[0].type;
-				res.cookie('uname', req.body.username);
-				res.redirect('/Admin');
-			}else if(result[0].type == "SCOUT"){
-				req.session.type = result[0].type;
-				res.cookie('uname', req.body.username);
-				res.redirect('/Scout');
-			}else if(result[0].type == "Guser"){
-				req.session.type = result[0].type;
-				res.cookie('uname', result[0].userid);
-				res.cookie('type', result[0].type);
-				
-				res.redirect('/Guser');
-			}	
-		}else{
-			res.redirect('/login');
-		}
-	});
-
-})
+router.post('/', function (req, res) {
+	if (req.body.usertype == "Admin") {
+		var user = {
+			username: req.body.uname,
+			password: req.body.password
+		};
+		adminModel.validate(user, function (status) {
+			if (status) {
+				res.cookie('uname', req.body.uname);
+				res.redirect('/admin');
+			} else {
+				res.render('login/error');
+			}
+		});
+	} else if (req.body.usertype == "user") {
+		var user = {
+			username: req.body.uname,
+			password: req.body.password
+		};
+		managerModel.validate(user, function (status) {
+			if (status) {
+				res.cookie('uname', req.body.uname);
+				res.redirect('/doctor');
+			} else {
+				res.render('login/error');
+			}
+		});
+	}  else {
+		res.send('invalid username/password');
+	}
+});
 
 module.exports = router;
