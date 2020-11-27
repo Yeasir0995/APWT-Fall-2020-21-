@@ -364,10 +364,45 @@ router.post('/delete/:id', (req, res)=>{
 			});
 		}
 	});
-	//delete from DB
-	//res.redirect('/admin/view_Doctor');
+	
 });
-
+router.get('/addBook', (req, res)=>{
+	bookListModel.getAll(function(results){
+	 
+	 res.render('admin/addBook', {userlist: results});
+	 });
+	 
+ });
+ 
+ 
+ router.post('/addBook', (req, res)=>{
+	 
+	 var user = {
+ 
+		    id :req.params.id, 
+			bookName: req.body.bookName,
+			price:req.body.price, 
+			 category:req.body.category, 
+			
+		 
+	 };
+	 console.log(user);
+	 
+	  bookListModel.insert(user,function(status){
+		 if(status){
+			 console.log("inside insertion");
+			 bookListModel.getAll(function(results){
+			 
+			 res.redirect('/admin/view_Book', {userlist: results});
+			 });
+			 console.log("did not insert");
+			
+			 res.render('admin/addBook');
+		 }
+	 });
+		 
+	 
+ });
 		
 
 
