@@ -42,7 +42,7 @@ module.exports ={
 		});
 	},
 	insert: function(user, callback){
-		var sql = "insert into booklist VALUES (?, ?, ?, ?, ?, ?)";
+		var sql = "insert into booklist VALUES (?, ?, ?, ?,?)";
 
 		db.execute(sql, ['', user.id,user.bookName, user.price, user.category], function(status){
 			callback(status);
